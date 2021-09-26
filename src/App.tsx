@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
 import "./App.css";
 import { BookDetails } from "./book/components/BookDetails/BookDetails";
 import { BookOverview } from "./book/components/BookOverview/BookOverview";
@@ -41,9 +42,11 @@ export const Routes = () => (
 function App() {
   return (
     <BrowserRouter>
-      <BookProvider>
-        <Routes />
-      </BookProvider>
+      <QueryClientProvider client={new QueryClient()}>
+        <BookProvider>
+          <Routes />
+        </BookProvider>
+      </QueryClientProvider>
     </BrowserRouter>
   );
 }

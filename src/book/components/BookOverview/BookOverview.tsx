@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
 import { Book } from "../../book";
 import { useBookService } from "../../services/BookService";
@@ -6,13 +6,14 @@ import { useBookService } from "../../services/BookService";
 export const BookOverview = () => {
   const { push } = useHistory();
   const { findAll } = useBookService();
-  const [books, setBooks] = useState<Book[]>([]);
+  const { isError, isLoading, error, data } = useQuery<Book[]>(
+    "books",
+    findAll,
+  );
 
-  useEffect(() => {
-    findAll().then(setBooks);
-  }, []);
-
-  return (
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error}</div>;
+  return data?.length ? (
     <div className='container'>
       <div className='row'>
         <div className='col-md-8 col-12'>
@@ -25,7 +26,7 @@ export const BookOverview = () => {
               </tr>
             </thead>
             <tbody>
-              {books.map((book, index) => (
+              {data.map((book, index) => (
                 <tr key={book.id} onClick={() => push(`/book/${book.id}`)}>
                   <th scope='row'>{index + 1}</th>
                   <td>{book.authors}</td>
@@ -37,5 +38,5 @@ export const BookOverview = () => {
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };
