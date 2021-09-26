@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Book } from "../../book";
-import { useBookService } from "../../services/BookService";
 
 export const BookOverview = () => {
   const { push } = useHistory();
-  const { findAll } = useBookService();
-  const [books, setBooks] = useState<Book[]>([]);
-
-  useEffect(() => {
-    findAll().then(setBooks);
-  }, []);
+  const [books] = useState<Book[]>([
+    { id: 1, authors: "Author #1", title: "Title #1" },
+    { id: 2, authors: "Author #2", title: "Title #2" },
+  ]);
 
   return (
     <div className='container'>

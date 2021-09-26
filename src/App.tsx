@@ -8,7 +8,6 @@ import {
 import "./App.css";
 import { BookDetails } from "./book/components/BookDetails/BookDetails";
 import { BookOverview } from "./book/components/BookOverview/BookOverview";
-import { BookProvider } from "./book/services/BookService";
 
 export const NavBar = () => (
   <nav>
@@ -41,9 +40,7 @@ export const Routes = () => (
 function App() {
   return (
     <BrowserRouter>
-      <BookProvider>
-        <Routes />
-      </BookProvider>
+      <Routes />
     </BrowserRouter>
   );
 }

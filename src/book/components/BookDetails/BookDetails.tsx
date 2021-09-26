@@ -1,31 +1,11 @@
-import { useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useBookService } from "../../services/BookService";
 import { BookProperties } from "../../book";
 
-interface ParamTypes {
-  id: string;
-}
-
 export const BookDetails = () => {
-  const { register, handleSubmit, reset } = useForm();
-  const { id } = useParams<ParamTypes>();
-  const { push } = useHistory();
-  const { save, saveNew, findOne } = useBookService();
-
-  useEffect(() => {
-    if (id) {
-      findOne(+id).then(reset);
-    }
-  }, [id]);
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: BookProperties) => {
-    if (id) {
-      save({ id: +id, ...data }).then(() => push("/books"));
-    } else {
-      saveNew(data).then(() => push("/books"));
-    }
+    console.log(data);
   };
   return (
     <div>
