@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
 import "./App.css";
 import { BookDetails } from "./book/components/BookDetails/BookDetails";
@@ -46,6 +47,7 @@ function App() {
         <BookProvider>
           <Routes />
         </BookProvider>
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </BrowserRouter>
   );

@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useBookService } from "../../services/BookService";
-import { BookProperties } from "../../book";
+import { Book, BookProperties } from "../../book";
+import { useMutation, useQuery } from "react-query";
 
 interface ParamTypes {
   id: string;
@@ -14,17 +15,29 @@ export const BookDetails = () => {
   const { push } = useHistory();
   const { save, saveNew, findOne } = useBookService();
 
+  const options = {
+    onSuccess: () => {
+      push("/books");
+    },
+  };
+
+  const { data: book } = useQuery(["book"], () => findOne(+id));
+  const { mutate: create } = useMutation<any, Error, BookProperties>(
+    saveNew,
+    options,
+  );
+  const { mutate: update } = useMutation<any, Error, Book>(save, options);
   useEffect(() => {
     if (id) {
-      findOne(+id).then(reset);
+      reset(book);
     }
-  }, [id]);
+  }, [book]);
 
   const onSubmit = (data: BookProperties) => {
     if (id) {
-      save({ id: +id, ...data }).then(() => push("/books"));
+      update({ id: +id, ...data });
     } else {
-      saveNew(data).then(() => push("/books"));
+      create(data);
     }
   };
   return (

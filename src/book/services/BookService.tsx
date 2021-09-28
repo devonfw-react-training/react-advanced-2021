@@ -2,7 +2,7 @@ import React, { createContext, useContext, FC } from "react";
 import { Book, BookProperties } from "../book";
 // import { useBooks } from "./useBooks";
 import { useBooks } from "./useGQLBooks";
-import { useRemoteBooks } from "./useRemoteBooks";
+// import { useRemoteBooks } from "./useRemoteBooks";
 
 export interface BookService {
   findAll: () => Promise<Book[]>;
