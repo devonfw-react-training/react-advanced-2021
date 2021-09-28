@@ -3,9 +3,6 @@ import { getURI, headers } from "../../common/utils";
 
 export const useRemoteBooks = () => {
   const findAll: BookService["findAll"] = () => {
-    // return new Promise((resolve, reject) => {
-    //   reject(new Error("Error!!"));
-    // });
     return fetch(getURI("books")).then((response) => response.json());
   };
   const findOne: BookService["findOne"] = (id) => {
